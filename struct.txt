@@ -1,0 +1,67 @@
+multi-service-devops/
+│
+├── services/
+│   ├── auth-service/
+│   │   ├── app/
+│   │   ├── Dockerfile
+│   │   └── requirements.txt
+│   │
+│   ├── user-service/
+│   ├── task-service/
+│   ├── notification-service/
+│   └── frontend/
+│
+├── api-gateway/
+│   ├── nginx.conf
+│   └── Dockerfile
+│
+├── k8s/
+│   ├── base/
+│   │   ├── namespace.yaml
+│   │   ├── configmap.yaml
+│   │   ├── secrets.yaml
+│   │
+│   ├── auth-service/
+│   │   ├── deployment.yaml
+│   │   ├── service.yaml
+│   │
+│   ├── user-service/
+│   ├── task-service/
+│   ├── notification-service/
+│   ├── frontend/
+│   ├── gateway/
+│   │   ├── ingress.yaml
+│   │
+│   ├── database/
+│   │   ├── postgres-deployment.yaml
+│   │   ├── pvc.yaml
+│   │
+│   └── monitoring/
+│       ├── prometheus/
+│       ├── grafana/
+│
+├── helm/
+│   ├── auth-chart/
+│   ├── user-chart/
+│   └── platform-chart/
+│
+├── terraform/
+│   ├── modules/
+│   │   ├── network/
+│   │   ├── k8s-cluster/
+│   │   └── monitoring/
+│   │
+│   ├── envs/
+│   │   ├── dev/
+│   │   ├── staging/
+│   │   └── prod/
+│
+├── ansible/
+│   ├── roles/
+│   │   ├── docker/
+│   │   ├── k8s/
+│   │   └── security/
+│
+├── .gitlab-ci.yml
+├── docker-compose.yml (for local dev)
+└── README.md
