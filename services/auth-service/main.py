@@ -2,10 +2,11 @@ from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 import jwt
 import datetime
+import os
 
 app = FastAPI(title="Auth Service")
 
-SECRET_KEY = "my_super_secret_dev_key"
+SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 
 class LoginData(BaseModel):
