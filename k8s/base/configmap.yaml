@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: platform-config
+  namespace: devops-app
+data:
+  DB_HOST: postgres
+  DB_PORT: "5432"
+  DB_NAME: appdb
+  APP_ENV: dev
