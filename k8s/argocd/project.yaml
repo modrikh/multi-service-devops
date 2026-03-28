@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: multi-service-devops
+  namespace: argocd
+spec:
+  description: GitOps project for multi-service-devops platform
+  sourceRepos:
+    - https://github.com/your-org/multi-service-devops.git
+  destinations:
+    - namespace: devops-app
+      server: https://kubernetes.default.svc
+    - namespace: argocd
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
