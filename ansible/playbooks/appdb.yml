@@ -1,0 +1,6 @@
+- name: Configure app and database VM
+  hosts: appdb
+  become: true
+  roles:
+    - common
+    - docker

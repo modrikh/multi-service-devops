@@ -19,7 +19,8 @@ spec:
         runAsNonRoot: true
       containers:
         - name: frontend
-          image: your-docker-repo/frontend:latest
+          image: frontend:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
           env:

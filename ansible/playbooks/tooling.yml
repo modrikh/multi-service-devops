@@ -1,0 +1,7 @@
+- name: Configure tooling VM
+  hosts: tooling
+  become: true
+  roles:
+    - common
+    - docker
+    - tooling

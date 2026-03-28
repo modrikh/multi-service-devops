@@ -19,7 +19,8 @@ spec:
         runAsNonRoot: true
       containers:
         - name: notification-service
-          image: your-docker-repo/notification-service:latest
+          image: notification-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
           env:

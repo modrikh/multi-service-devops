@@ -16,6 +16,16 @@ FRONTEND_SERVICE_URL = os.getenv("FRONTEND_SERVICE_URL", "http://frontend:8006")
 def healthz():
     return {"status": "ok", "service": "api-gateway"}
 
+@app.api_route("/", methods=["GET", "HEAD"])
+async def route_root_to_frontend(request: Request):
+    """Serve frontend homepage through gateway root path."""
+    return await proxy_request(f"{FRONTEND_SERVICE_URL}/", request)
+
+@app.api_route("/frontend", methods=["GET", "HEAD"])
+async def route_frontend_base(request: Request):
+    """Support /frontend without requiring a trailing sub-path."""
+    return await proxy_request(f"{FRONTEND_SERVICE_URL}/", request)
+
 @app.api_route("/auth/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
 async def route_to_auth(path: str, request: Request):
     """Proxy requests starting with /auth to the Auth Service."""

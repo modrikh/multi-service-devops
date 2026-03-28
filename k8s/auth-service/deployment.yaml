@@ -19,7 +19,7 @@ spec:
         runAsNonRoot: true
       containers:
         - name: auth-service
-          image: your-docker-repo/auth-service:latest
+          image: auth-service:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000

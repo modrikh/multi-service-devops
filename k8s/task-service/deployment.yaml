@@ -19,7 +19,8 @@ spec:
         runAsNonRoot: true
       containers:
         - name: task-service
-          image: your-docker-repo/task-service:latest
+          image: task-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
           env:

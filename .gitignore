@@ -1,0 +1,81 @@
+# -----------------------------
+# OS / Editor
+# -----------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# -----------------------------
+# Python
+# -----------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# -----------------------------
+# Logs / runtime
+# -----------------------------
+*.log
+logs/
+
+# -----------------------------
+# Terraform
+# -----------------------------
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Keep provider lock files committed for reproducibility
+!**/.terraform.lock.hcl
+
+# Local variable files (often contain secrets)
+*.tfvars
+*.tfvars.json
+
+# Keep example tfvars templates if present
+!*.tfvars.example
+
+# -----------------------------
+# Ansible
+# -----------------------------
+*.retry
+ansible/*.retry
+
+# -----------------------------
+# Kubernetes / cluster local artifacts
+# -----------------------------
+kubeconfig
+*.kubeconfig
+
+# -----------------------------
+# Local binaries / tools
+# -----------------------------
+kubectl
+
+# -----------------------------
+# Misc
+# -----------------------------
+*.bak
+*.tmp

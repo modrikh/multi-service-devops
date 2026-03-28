@@ -1,0 +1,50 @@
+- name: Download kubectl binary
+  ansible.builtin.get_url:
+    url: https://dl.k8s.io/release/v1.30.0/bin/linux/amd64/kubectl
+    dest: /usr/local/bin/kubectl
+    mode: "0755"
+
+- name: Download Helm install script
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    dest: /tmp/get_helm.sh
+    mode: "0755"
+
+- name: Install Helm
+  ansible.builtin.command: /tmp/get_helm.sh
+  args:
+    creates: /usr/local/bin/helm
+
+- name: Add HashiCorp apt key
+  ansible.builtin.get_url:
+    url: https://apt.releases.hashicorp.com/gpg
+    dest: /tmp/hashicorp.gpg
+    mode: "0644"
+
+- name: Install HashiCorp keyring
+  ansible.builtin.command: gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg /tmp/hashicorp.gpg
+  args:
+    creates: /usr/share/keyrings/hashicorp-archive-keyring.gpg
+
+- name: Add HashiCorp apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    state: present
+    filename: hashicorp
+
+- name: Install Terraform
+  ansible.builtin.apt:
+    update_cache: true
+    name: terraform
+    state: present
+
+- name: Download Azure CLI install script
+  ansible.builtin.get_url:
+    url: https://aka.ms/InstallAzureCLIDeb
+    dest: /tmp/install_azure_cli.sh
+    mode: "0755"
+
+- name: Install Azure CLI
+  ansible.builtin.command: /tmp/install_azure_cli.sh
+  args:
+    creates: /usr/bin/az
