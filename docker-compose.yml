@@ -1,0 +1,102 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: change-me
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d appdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  auth-service:
+    build:
+      context: ./services/auth-service
+    container_name: auth-service
+    environment:
+      SECRET_KEY: change-me-very-long-secret
+      APP_ENV: dev
+    ports:
+      - "8001:8000"
+
+  core-service:
+    build:
+      context: ./services/core-service
+    container_name: core-service
+    environment:
+      DATABASE_URL: postgresql+psycopg2://postgres:change-me@postgres:5432/appdb
+      APP_ENV: dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8002:8000"
+
+  user-service:
+    build:
+      context: ./services/user-service
+    container_name: user-service
+    environment:
+      APP_ENV: dev
+    ports:
+      - "8003:8000"
+
+  task-service:
+    build:
+      context: ./services/task-service
+    container_name: task-service
+    environment:
+      APP_ENV: dev
+    ports:
+      - "8004:8000"
+
+  notification-service:
+    build:
+      context: ./services/notification-service
+    container_name: notification-service
+    environment:
+      APP_ENV: dev
+    ports:
+      - "8005:8000"
+
+  frontend:
+    build:
+      context: ./services/frontend
+    container_name: frontend
+    environment:
+      APP_ENV: dev
+    ports:
+      - "8006:8000"
+
+  api-gateway:
+    build:
+      context: ./services/api-gateway
+    container_name: api-gateway
+    environment:
+      AUTH_SERVICE_URL: http://auth-service:8000
+      CORE_SERVICE_URL: http://core-service:8000
+      USER_SERVICE_URL: http://user-service:8000
+      TASK_SERVICE_URL: http://task-service:8000
+      NOTIFICATION_SERVICE_URL: http://notification-service:8000
+      FRONTEND_SERVICE_URL: http://frontend:8000
+    depends_on:
+      - auth-service
+      - core-service
+      - user-service
+      - task-service
+      - notification-service
+      - frontend
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:
