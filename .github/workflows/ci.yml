@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Python syntax check
+        run: python -m compileall services
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.0
+
+      - name: Terraform validate (dev)
+        working-directory: terraform/envs/dev
+        run: |
+          terraform init -backend=false
+          terraform validate
+
+      - name: Install yamllint
+        run: pip install --no-cache-dir yamllint
+
+      - name: YAML lint
+        run: 'yamllint -d "{extends: default, rules: {line-length: {max: 180}}}" k8s ansible .github/workflows/ci.yml docker-compose.yml'
+
+  build-images:
+    name: Build service images
+    runs-on: ubuntu-latest
+    needs: validate
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build auth-service image
+        run: docker build -t auth-service:latest services/auth-service
+
+      - name: Build core-service image
+        run: docker build -t core-service:latest services/core-service
+
+      - name: Build api-gateway image
+        run: docker build -t api-gateway:latest services/api-gateway
+
+      - name: Build user-service image
+        run: docker build -t user-service:latest services/user-service
+
+      - name: Build task-service image
+        run: docker build -t task-service:latest services/task-service
+
+      - name: Build notification-service image
+        run: docker build -t notification-service:latest services/notification-service
+
+      - name: Build frontend image
+        run: docker build -t frontend:latest services/frontend
