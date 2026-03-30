@@ -83,9 +83,6 @@ kubectl
 DEPLOYMENT_WORKFLOW.md
 PROJECT_DOCUMENTATION.md
 
-scritps/
-scritps
-scripts/
-scripts
-
-
+build.sh
+deploy.sh
+setup-monitoring.sh
