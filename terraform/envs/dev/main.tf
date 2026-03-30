@@ -28,6 +28,17 @@ module "k8s_cluster" {
   private_subnet_ids  = module.network.private_subnet_ids
 }
 
+module "acr" {
+  source = "../../modules/acr"
+
+  project_name            = var.project_name
+  environment             = var.environment
+  resource_group_name     = module.network.resource_group_name
+  region                  = var.region
+  acr_sku                 = var.acr_sku
+  aks_kubelet_identity_id = module.k8s_cluster.kubelet_identity_id
+}
+
 module "monitoring" {
   source = "../../modules/monitoring"
 

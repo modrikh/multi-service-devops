@@ -33,3 +33,14 @@ output "tooling_private_ip" {
 output "appdb_private_ip" {
   value = module.vm_infra.appdb_private_ip
 }
+
+output "acr_login_server" {
+  description = "ACR login server (e.g. multiservicedevopsdevacr.azurecr.io)"
+  value       = module.acr.acr_login_server
+}
+
+output "acr_name" {
+  description = "ACR resource name"
+  value       = module.acr.acr_name
+}
+

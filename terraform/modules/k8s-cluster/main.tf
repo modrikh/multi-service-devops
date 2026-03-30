@@ -10,6 +10,8 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   resource_group_name = var.resource_group_name
   dns_prefix          = local.dns_prefix
   kubernetes_version  = var.kubernetes_version
+  
+  oidc_issuer_enabled = true
 
   default_node_pool {
     name           = local.node_pool

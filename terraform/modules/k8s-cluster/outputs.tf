@@ -17,3 +17,8 @@ output "cluster_id" {
   description = "AKS cluster ID"
   value       = azurerm_kubernetes_cluster.cluster.id
 }
+
+output "kubelet_identity_id" {
+  description = "Object ID of the AKS kubelet managed identity (used for ACR role assignment)"
+  value       = azurerm_kubernetes_cluster.cluster.kubelet_identity[0].object_id
+}
