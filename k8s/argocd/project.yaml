@@ -6,7 +6,7 @@ metadata:
 spec:
   description: GitOps project for multi-service-devops platform
   sourceRepos:
-    - https://github.com/your-org/multi-service-devops.git
+    - https://github.com/modrikh/multi-service-devops.git
   destinations:
     - namespace: devops-app
       server: https://kubernetes.default.svc
