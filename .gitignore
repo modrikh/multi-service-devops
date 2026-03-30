@@ -79,3 +79,9 @@ kubectl
 # -----------------------------
 *.bak
 *.tmp
+
+DEPLOYMENT_WORKFLOW.md
+PROJECT_DOCUMENTATION.md
+
+scritps/
+
