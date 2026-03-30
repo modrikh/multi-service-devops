@@ -19,7 +19,7 @@ spec:
         runAsNonRoot: true
       containers:
         - name: notification-service
-          image: notification-service:latest
+          image: multiservicedevopsdevacr.azurecr.io/notification-service:v2.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000

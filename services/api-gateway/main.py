@@ -14,7 +14,11 @@ FRONTEND_SERVICE_URL = os.getenv("FRONTEND_SERVICE_URL", "http://frontend:8006")
 
 @app.get("/healthz")
 def healthz():
-    return {"status": "ok", "service": "api-gateway"}
+    return {
+        "status": "ok", 
+        "service": "api-gateway", 
+        "version": "v2.0 ⭐ GitOps CI/CD is working!"
+    }
 
 @app.api_route("/", methods=["GET", "HEAD"])
 async def route_root_to_frontend(request: Request):

@@ -6,7 +6,7 @@ metadata:
 spec:
   project: multi-service-devops
   source:
-    repoURL: https://github.com/your-org/multi-service-devops.git
+    repoURL: https://github.com/modrikh/multi-service-devops.git
     targetRevision: main
     path: k8s/argocd/apps
   destination:
